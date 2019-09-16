@@ -3,7 +3,6 @@
 
 namespace app\lib\exception;
 
-
 class BannerException extends BaseException
 {
     public $code = "404";
