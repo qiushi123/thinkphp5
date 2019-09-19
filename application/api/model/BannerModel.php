@@ -6,7 +6,7 @@ namespace app\api\model;
 
 use think\Model;
 
-class BannerModel extends Model {
+class BannerModel extends BaseModel {
     //指定当前模型对应那个数据表
     protected $table = "banner";
 

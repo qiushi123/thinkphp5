@@ -11,7 +11,7 @@ namespace app\api\model;
 
 use think\Model;
 
-class BannerItemModel extends Model {
+class BannerItemModel extends BaseModel {
     protected $table = 'banner_item';
 
     protected $hidden=['img_id','banner_id','delete_time','update_time'];

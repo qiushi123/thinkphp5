@@ -11,8 +11,13 @@ namespace app\api\model;
 
 use think\Model;
 
-class ImageModel extends Model {
+class ImageModel extends BaseModel {
     protected $table = 'image';
     //只显示那些属性
     protected $visible = ['id', 'url'];
+
+    public function getUrlAttr($value, $data) {
+        return $this->UrlPreFix($value, $data);
+
+    }
 }
