@@ -3,7 +3,7 @@
  * 2019/9/19 09:14
  * author: 编程小石头
  * wechat:2501902696
- * desc:
+ * desc: 主题专栏model层
  */
 
 namespace app\api\model;
