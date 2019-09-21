@@ -9,12 +9,15 @@
 namespace app\api\controller\v1;
 
 
+use app\api\service\UserService;
 use app\api\validate\ValidateToken;
 
 class User {
 
     public function getToken($code) {
         (new ValidateToken())->goCheck();
-        return "ok";
+        $userService = new UserService($code);
+        $token = $userService->getToken();
+        return $token;
     }
 }

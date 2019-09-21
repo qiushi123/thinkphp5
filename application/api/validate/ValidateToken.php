@@ -12,10 +12,14 @@ namespace app\api\validate;
 class ValidateToken extends BaseValidate {
 
     protected $rule = [
-        'code' => 'require|isNoEmpty'
+        'code' => 'require|isNoEmpty',
+//        'appId' => 'require|isNoEmpty',
+//        'appSecret' => 'require|isNoEmpty'
     ];
 
     protected $message = [
-        'code' => 'code为空或者格式不正确'
+        'code' => 'code为空或者格式不正确',
+//        'appId' => 'appId为空或者格式不正确',
+//        'appSecret' => 'appSecret为空或者格式不正确'
     ];
 }
