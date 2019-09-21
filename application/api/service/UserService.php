@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\model\UserModel;
 use app\lib\exception\WeChatException;
 use think\Exception;
 
@@ -45,9 +46,31 @@ class UserService {
         }
     }
 
+
     private function grantToken($wxResult) {
+        //1，拿到openid
         $openid = $wxResult['openid'];
-        echo $openid;
+        //2，数据库里查看是否存在
+        $user = UserModel::getByOpenId($openid);
+        if ($user) {
+            $uid = $user->id;
+        } else {
+            //3，如果不存在，就创建user并获取uid
+            UserModel::create(['openid' => $openid])->id;
+        }
+        //4，准备缓存数据，并写入缓存
+        $cacheValue = $this->prepareCacheValue($wxResult, $uid);
+
+    }
+
+    private function saveToCache($cacheValue) {
+        $key = generateToken();
+    }
+
+    private function prepareCacheValue($wxResult, $uid) {
+        $cacheValue = $wxResult;
+        $cacheValue['uid'] = $uid;
+        $cacheValue['scope'] = 16;
     }
 
     private function processLoginErr($wxInfo) {
