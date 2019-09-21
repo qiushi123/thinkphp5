@@ -35,4 +35,12 @@ class BaseValidate extends Validate {
             return false;
         }
     }
+
+    protected function isNoEmpty($value, $rule = '', $data = '', $field = '') {
+        if (empty($value) || strlen($value) < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

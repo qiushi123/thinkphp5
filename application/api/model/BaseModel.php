@@ -16,6 +16,7 @@ class BaseModel extends Model {
 
     protected function UrlPreFix($value, $data) {
         $finalUrl = $value;
+        //form：1内部图片，2外部图片
         if ($data['from'] == 1) {
             $finalUrl = config('setting.img_prefix') . $value;
         }

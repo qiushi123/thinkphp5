@@ -13,10 +13,10 @@ class Banner {
     public function getBanner($id) {
         (new ValidateId())->goCheck();
         $result = BannerModel::getBannerById($id);
-        if (!$result) {
+        if ($result->isEmpty()) {
 //            throw  new BannerException();
             throw  new Exception('自定义错误日志');
         }
-        return json($result);
+        return $result;
     }
 }

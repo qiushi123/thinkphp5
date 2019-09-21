@@ -18,4 +18,21 @@ class ProductModel extends BaseModel {
         return $this->UrlPreFix($value, $data);
 
     }
+
+    /*
+     * 获取最新的新品
+     * */
+    public static function getRecentProduct($count) {
+        return self::limit($count)
+            ->order('create_time desc')
+            ->select();
+    }
+
+    /*
+     * 获取某一个分类下的所有商品
+     * */
+    public static function getAllProductByCategoryId($id) {
+        return self::where('category_id', '=', $id)
+            ->select();
+    }
 }

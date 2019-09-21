@@ -27,7 +27,7 @@ class Theme {
         $ids = explode(',', $ids);
         $result = ThemeModel::with('topicImg,headImg')
             ->select($ids);
-        if (!$result) {
+        if ($result->isEmpty()) {
             throw new ThemeException();
         }
         return $result;
@@ -39,18 +39,18 @@ class Theme {
      * */
     public function getComplexOne($id) {
         (new ValidateId())->goCheck();
-       $theme=ThemeModel::getThemeProducts($id);
-       if(!$theme){
-          throw new ThemeException();
-       }
-       return $theme;
+        $theme = ThemeModel::getThemeProducts($id);
+        if ($theme->isEmpty()) {
+            throw new ThemeException();
+        }
+        return $theme;
     }
 
 
     public function getTheme($id) {
         (new ValidateId())->goCheck();
         $result = Theme::getThemeById($id);
-        if (!$result) {
+        if ($result->isEmpty()) {
 //            throw  new BannerException();
             throw  new Exception('自定义错误日志');
         }
