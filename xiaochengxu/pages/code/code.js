@@ -5,7 +5,22 @@ Page({
     wx.login({
       success(res) {
         console.log('code', res.code)
-        that.getOpenid(res.code)
+        // that.getToken(res.code)
+      }
+    })
+  },
+  getToken(wxCode){
+    wx.request({
+      url: 'http://localhost:9001/public/api/v1/user/token',
+      method:'post',
+      data: {
+        code: wxCode
+      },
+      success(res) {
+        console.log('获取成功', res)
+      },
+      fail(res) {
+        console.log('获取失败', res)
       }
     })
   },

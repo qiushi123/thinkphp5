@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/code/code"
+    "pages/code/code",
+    "pages/https/https"
   ],
   "window": {
     "backgroundTextStyle": "light",

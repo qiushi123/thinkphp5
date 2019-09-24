@@ -10,10 +10,11 @@ namespace app\api\service;
 
 
 use app\api\model\UserModel;
+use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
 use think\Exception;
 
-class UserService {
+class UserService extends TokenService {
 
     protected $code;
     protected $wxAppID;
@@ -41,7 +42,7 @@ class UserService {
             if ($loginFail) {//调用失败
                 $this->processLoginErr($wxResult);
             } else {
-                $this->grantToken($wxResult);
+                return $this->grantToken($wxResult);
             }
         }
     }
@@ -56,15 +57,29 @@ class UserService {
             $uid = $user->id;
         } else {
             //3，如果不存在，就创建user并获取uid
-            UserModel::create(['openid' => $openid])->id;
+            $uid =UserModel::create(['openid' => $openid])->id;
         }
         //4，准备缓存数据，并写入缓存
         $cacheValue = $this->prepareCacheValue($wxResult, $uid);
+        $token = $this->saveToCache($cacheValue);
+        return $token;
 
     }
 
     private function saveToCache($cacheValue) {
-        $key = generateToken();
+        $key = self::generateToken();
+        $value = json_encode($cacheValue);
+        //缓存过期时间
+        $tokenTime = config('setting.token_time');
+
+        $request = cache($key, $value, $tokenTime);
+        if (!$request) {
+            throw new TokenException([
+                'msg' => '服务器缓存异常',
+                'errCode' => 10005
+            ]);
+        }
+        return $key;
     }
 
     private function prepareCacheValue($wxResult, $uid) {

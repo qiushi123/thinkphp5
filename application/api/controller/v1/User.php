@@ -18,6 +18,8 @@ class User {
         (new ValidateToken())->goCheck();
         $userService = new UserService($code);
         $token = $userService->getToken();
-        return $token;
+        return [
+            'token' => $token
+        ];
     }
 }
