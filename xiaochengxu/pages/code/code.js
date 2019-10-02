@@ -5,7 +5,7 @@ Page({
     wx.login({
       success(res) {
         console.log('code', res.code)
-        // that.getToken(res.code)
+        that.getToken(res.code)
       }
     })
   },
@@ -17,7 +17,7 @@ Page({
         code: wxCode
       },
       success(res) {
-        console.log('获取成功', res)
+        console.log('获取成功', res.data.token)
       },
       fail(res) {
         console.log('获取失败', res)

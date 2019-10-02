@@ -19,6 +19,16 @@ class ProductModel extends BaseModel {
 
     }
 
+    //商品关联的imgs
+    public function imgs() {
+        return $this->hasMany('ProductImageModel', 'product_id', 'id');
+    }
+
+    //商品关联de属性
+    public function properties() {
+        return $this->hasMany('ProductPropertyModel', 'product_id', 'id');
+    }
+
     /*
      * 获取最新的新品
      * */
@@ -35,4 +45,18 @@ class ProductModel extends BaseModel {
         return self::where('category_id', '=', $id)
             ->select();
     }
+
+    /*
+     * 获取某一个商品详情
+     * */
+    public static function getProductDetail($id) {
+        return self::with([
+            'imgs' => function ($query) {
+                $query->with(['imgUrl'])
+                    ->order('order', 'asc');
+            }])
+            ->with(['properties'])
+            ->find($id);
+    }
+
 }

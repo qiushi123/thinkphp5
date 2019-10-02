@@ -44,4 +44,12 @@ class Product {
         return $result;
 
     }
+
+    /*
+     * 获取商品详情页
+     * */
+    public function getOne($id){
+        (new ValidateId())->goCheck();
+        return ProductModel::getProductDetail($id);
+    }
 }

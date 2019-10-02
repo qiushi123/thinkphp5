@@ -1,1 +1,1 @@
-<button bindtap="getCode">获取openid</button>
+<button bindtap="getCode">获取token</button>

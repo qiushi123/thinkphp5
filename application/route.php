@@ -23,9 +23,14 @@ Route::get('api/:v/theme/:id', 'api/:v.Theme/getComplexOne');
  * 商品相关
  * http://localhost:9001/public/api/v1/product/count=10 获取最新10条产品
  * http://localhost:9001/public/api/v1/product/byCategory?id=2  获取某一个分类下所有商品
+ * http://localhost:9001/public/api/v1/product/detail/2  获取商品详情
  * */
-Route::get('api/:v/product/:count', 'api/:v.Product/getRecent');
-Route::get('api/:v/product/byCategory/:id', 'api/:v.Product/getAllByCategory');
+Route::group('api/:v/product', function () {
+    Route::get('/:count', 'api/:v.Product/getRecent');
+    Route::get('/byCategory/:id', 'api/:v.Product/getAllByCategory');
+    Route::get('/detail/:id', 'api/:v.Product/getOne');
+});
+
 
 /*
  * 分类相关
@@ -38,3 +43,11 @@ Route::get('api/:v/category/all', 'api/:v.Category/getAllCategory');
  * http://localhost:9001/public/api/v1/user/token?code='' 通过code值获取token
  * */
 Route::post('api/:v/user/token', 'api/:v.User/getToken');
+
+/*
+ * 地址相关
+ * http://localhost:9001/public/api/v1/address/add 添加或者更新地址
+ * */
+Route::post('api/:v/address/add', 'api/:v.Address/createOrUpdateAddress');
+
+

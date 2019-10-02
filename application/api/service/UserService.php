@@ -57,7 +57,7 @@ class UserService extends TokenService {
             $uid = $user->id;
         } else {
             //3，如果不存在，就创建user并获取uid
-            $uid =UserModel::create(['openid' => $openid])->id;
+            $uid = UserModel::create(['openid' => $openid])->id;
         }
         //4，准备缓存数据，并写入缓存
         $cacheValue = $this->prepareCacheValue($wxResult, $uid);
@@ -66,12 +66,13 @@ class UserService extends TokenService {
 
     }
 
+    //保存token
     private function saveToCache($cacheValue) {
+        //1,获取token作为key
         $key = self::generateToken();
         $value = json_encode($cacheValue);
-        //缓存过期时间
+        //2，设置缓存过期时间，并把数据存到缓存
         $tokenTime = config('setting.token_time');
-
         $request = cache($key, $value, $tokenTime);
         if (!$request) {
             throw new TokenException([
@@ -86,8 +87,10 @@ class UserService extends TokenService {
         $cacheValue = $wxResult;
         $cacheValue['uid'] = $uid;
         $cacheValue['scope'] = 16;
+        return $cacheValue;
     }
 
+    //登录失败
     private function processLoginErr($wxInfo) {
         throw new WeChatException([
             'msg' => $wxInfo['errmsg'],
