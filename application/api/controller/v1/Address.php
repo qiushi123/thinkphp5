@@ -12,10 +12,19 @@ namespace app\api\controller\v1;
 use app\api\model\UserModel;
 use app\api\service\TokenService;
 use app\api\validate\AddressValidate;
+use app\lib\enum\ScopeEnum;
+use app\lib\exception\TokenException;
 use app\lib\exception\UserException;
+use app\lib\exception\UserScopeException;
 use app\lib\result\SuccessResult;
 
-class Address {
+class Address extends BaseController {
+
+    //前置方法
+    protected $beforeActionList = [
+        'checkPrimaryScope' => ['only' => 'createOrUpdateAddress']
+    ];
+
 
     public function createOrUpdateAddress() {
         $addressValidate = new AddressValidate();

@@ -9,7 +9,9 @@
 namespace app\api\service;
 
 
+use app\lib\enum\ScopeEnum;
 use app\lib\exception\TokenException;
+use app\lib\exception\UserScopeException;
 use think\Cache;
 use think\Exception;
 use think\Request;
@@ -48,5 +50,21 @@ class TokenService {
     //获取用户id
     public static function getUserId() {
         return self::getTokenVar('uid');
+    }
+
+    /*
+     * 校验用户权限
+     * */
+    public static function needPrimaryScope() {
+        $scope = self::getTokenVar('scope');
+        if ($scope) {
+            if ($scope >= ScopeEnum::USER) {
+                return true;
+            } else {
+                throw new UserScopeException();
+            }
+        } else {
+            throw new TokenException();
+        }
     }
 }

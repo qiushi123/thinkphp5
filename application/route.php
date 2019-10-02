@@ -50,4 +50,10 @@ Route::post('api/:v/user/token', 'api/:v.User/getToken');
  * */
 Route::post('api/:v/address/add', 'api/:v.Address/createOrUpdateAddress');
 
+/*
+ * 订单相关
+ *http://localhost:9001/public/api/v1/order 订单
+ * */
+Route::post('api/:v/order', 'api/:v.Order/placeOrder');
+
 
