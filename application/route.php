@@ -57,3 +57,9 @@ Route::post('api/:v/address/add', 'api/:v.Address/createOrUpdateAddress');
 Route::post('api/:v/order', 'api/:v.Order/placeOrder');
 
 
+/*
+ * 支付相关
+ * http://localhost:9001/public/api/v1/pay/pre_order?id=2   获取预支付订单
+ * */
+Route::post('api/:v/pay/pre_order', 'api/:v.Pay/getPreOrder');
+

@@ -193,4 +193,16 @@ class OrderService {
                 '%02d', rand(0, 99));
         return $orderSn;
     }
+
+    /*
+     * 对外提供的检测库存的方法
+     * */
+    public function checkOrderStock($orderId) {
+        $oProducts = OrderProductModel::where('order_id', '=', $orderId)
+            ->select();
+        $this->oProducts = $oProducts;
+        $this->products = $this->getProductByOrder($oProducts);
+        $status = $this->getOrderStatus();
+        return $status;
+    }
 }

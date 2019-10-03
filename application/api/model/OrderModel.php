@@ -13,4 +13,7 @@ class OrderModel extends BaseModel {
     protected $table = 'order';
     protected $hidden = ['user_id', 'delete_time', 'update_time'];
 
+    //自动写入时间戳
+    protected $autoWriteTimestamp = true;
+
 }

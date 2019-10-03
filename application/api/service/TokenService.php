@@ -67,4 +67,18 @@ class TokenService {
             throw new TokenException();
         }
     }
+
+    /*
+     * 对外提供的用于校验当前操作的uid是不是本人
+     * */
+    public static function isValidOperate($checkUid) {
+        if (!$checkUid) {
+            throw new Exception('检测用户合法性的uid不能为空');
+        }
+        $currentUid = self::getUserId();
+        if ($currentUid == $checkUid) {
+            return true;
+        }
+        return false;
+    }
 }

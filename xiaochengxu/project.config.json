@@ -5,7 +5,7 @@
 	},
 	"setting": {
 		"urlCheck": false,
-		"es6": true,
+		"es6": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
@@ -22,7 +22,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.8.3",
-	"appid": "wx4b55bb240aec2ee3",
+	"appid": "wx3a9741a27fe04fd3",
 	"projectname": "xiaochengxu",
 	"debugOptions": {
 		"hidedInDevtools": []
