@@ -12,9 +12,10 @@ namespace app\api\validate;
 use app\lib\exception\ParamException;
 
 class OrderValidate extends BaseValidate {
+
     //校验订单里的商品数组
     protected $rule = [
-        'products' => 'checkProducts'
+        'products' => 'require|checkProducts'
     ];
     //校验商品数组里的每个商品
     protected $singleRule = [
@@ -23,13 +24,8 @@ class OrderValidate extends BaseValidate {
     ];
 
     protected function checkProducts($values) {
-        if (!is_array($values)) {
-            throw new ParamException([
-                'msg' => '商品参数不正确'
-            ]);
-        }
-        if (!$values) {
-            throw new ParamException([
+        if (empty($values)) {
+            throw new ParameterExceptt([
                 'msg' => '商品列表不能为空'
             ]);
         }
@@ -39,16 +35,13 @@ class OrderValidate extends BaseValidate {
         return true;
     }
 
-    protected function checkProduct($value) {
+    private function checkProduct($value) {
         $validate = new BaseValidate($this->singleRule);
         $result = $validate->check($value);
         if (!$result) {
             throw new ParamException([
-                'msg' => '商品参数不正确'
+                'msg' => '商品列表参数错误',
             ]);
         }
-
     }
-
-
 }

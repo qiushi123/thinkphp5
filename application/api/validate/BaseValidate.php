@@ -11,20 +11,21 @@ use think\Validate;
 class BaseValidate extends Validate {
 
     public function goCheck() {
+        //必须设置contetn-type:application/json
         $request = Request::instance();
         $params = $request->param();
+        $params['token'] = $request->header('token');
 
-        $result = $this->check($params);
-        if ($result) {
-            return true;
-        } else {
-            $e = new ParamException([
-                'msg' => $this->error
-            ]);
-            throw  $e;
-//            $err=$this->error;
-//            throw  new Exception($err);
+        if (!$this->check($params)) {
+            $exception = new ParamException(
+                [
+                    // $this->error有一个问题，并不是一定返回数组，需要判断
+                    'msg' => is_array($this->error) ? implode(
+                        ';', $this->error) : $this->error,
+                ]);
+            throw $exception;
         }
+        return true;
     }
 
     //校验是不是一个手机号

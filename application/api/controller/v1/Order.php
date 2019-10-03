@@ -9,8 +9,10 @@
 namespace app\api\controller\v1;
 
 
+use app\api\service\OrderService;
 use app\api\service\TokenService;
 use app\api\validate\OrderValidate;
+use app\api\validate\ValidateId;
 
 class Order extends BaseController {
 
@@ -25,6 +27,9 @@ class Order extends BaseController {
         $products = input('post.products/a');
         $uid = TokenService::getUserId();
         //2,检测库存
+        $orderService = new OrderService();
+        $status = $orderService->place($uid, $products);
+        return $status;
         //3，下单成功
         //4，调用支付接口，还要再次检测库存
         //5，调用支付接口进行支付

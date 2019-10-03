@@ -8,8 +8,6 @@
 namespace app\api\validate;
 
 
-use think\Validate;
-
 class ValidateCount extends BaseValidate {
 
     //ID必须是正整数

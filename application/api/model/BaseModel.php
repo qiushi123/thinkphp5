@@ -14,6 +14,7 @@ use think\Model;
 class BaseModel extends Model {
 
 
+    //补全图片链接
     protected function UrlPreFix($value, $data) {
         $finalUrl = $value;
         //form：1内部图片，2外部图片
