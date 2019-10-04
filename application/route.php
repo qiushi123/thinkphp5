@@ -53,8 +53,11 @@ Route::post('api/:v/address/add', 'api/:v.Address/createOrUpdateAddress');
 /*
  * 订单相关
  *http://localhost:9001/public/api/v1/order 订单
+ *http://localhost:9001/public/api/v1/order/by_user  某个用户的订单
  * */
 Route::post('api/:v/order', 'api/:v.Order/placeOrder');
+Route::post('api/:v/order/by_user', 'api/:v.Order/getSummaryByUser');
+Route::post('api/:v/order/:id', 'api/:v.Order/getDetail', [], ['id' => '\d+']);
 
 
 /*
