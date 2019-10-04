@@ -10,6 +10,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\service\PayService;
+use app\api\service\WxNotifyService;
 use app\api\validate\ValidateId;
 
 class Pay extends BaseController {
@@ -21,7 +22,12 @@ class Pay extends BaseController {
     public function getPreOrder($id = '') {
         (new ValidateId())->goCheck();
         $payService = new PayService($id);
-        $result=$payService->pay();
+        $result = $payService->pay();
         return $result;
+    }
+
+    public function receiveNotify() {
+        $wxNotify = new WxNotifyService();
+        $wxNotify->Handle();
     }
 }

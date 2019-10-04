@@ -1,1 +1,2 @@
 <button bindtap="getCode">获取token</button>
+<button bindtap="goPay">下单支付</button>

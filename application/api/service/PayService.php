@@ -57,11 +57,12 @@ class PayService {
         $wxOrderData->SetTotal_fee($totalPrice * 100);
         $wxOrderData->SetBody('编程小石头');
         $wxOrderData->SetOpenid($openid);
-        $wxOrderData->SetNotify_url('http://qq.com');
+        $wxOrderData->SetNotify_url(config('wx.pay_back_url'));
         return $this->getPaySignature($wxOrderData);
 
     }
 
+    //获取支付参数
     private function getPaySignature($wxOrderData) {
         $wxOrder = \WxPayApi::unifiedOrder($wxOrderData);
         if ($wxOrder['return_code'] != 'SUCCESS' ||
@@ -69,7 +70,36 @@ class PayService {
             Log::record($wxOrder, 'error');
             Log::record('获取预支付订单失败', 'error');
         }
-        return $wxOrder;
+        //保存prepay_id
+        $this->recordPrePayId($wxOrder);
+        return $this->sign($wxOrder);
+    }
+
+    //生成小程序支付所需的签名参数
+    private function sign($wxOrder) {
+        $jsApi = new \WxPayJsApiPay();
+        $jsApi->SetAppid(config('wx.app_id'));
+        $jsApi->SetTimeStamp((string)time());
+
+        //随机字符串
+        $rand = md5(time() . mt_rand(1, 1000));
+        $jsApi->SetNonceStr($rand);
+
+        $jsApi->SetPackage('prepay_id' . $wxOrder['prepay_id']);
+        $jsApi->SetSignType('md5');
+
+        $sign = $jsApi->MakeSign();
+        $rawValues = $jsApi->GetValues();
+        $rawValues['paySign'] = $sign;
+        unset($rawValues['appId']);//appid不用返回给小程序
+
+        return $rawValues;
+    }
+
+    //保存prepay_id，用于模版消息推送
+    private function recordPrePayId($wxOrder) {
+        OrderModel::where('id', '=', $this->orderId)
+            ->update(['prepay_id' => $wxOrder['prepay_id']]);
     }
 
     private function checkOrderValid() {

@@ -60,6 +60,8 @@ Route::post('api/:v/order', 'api/:v.Order/placeOrder');
 /*
  * 支付相关
  * http://localhost:9001/public/api/v1/pay/pre_order?id=2   获取预支付订单
+ * http://localhost:9001/public/api/v1/pay/notify   支付成功后接受微信的回调
  * */
 Route::post('api/:v/pay/pre_order', 'api/:v.Pay/getPreOrder');
+Route::post('api/:v/pay/notify', 'api/:v.Pay/receiveNotify');
 
