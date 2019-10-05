@@ -1,0 +1,33 @@
+<import src="../tpls/products/products-tpl.wxml"/>
+<view>
+  <!-- 顶部轮播图 -->
+  <swiper class="swiper" indicator-dots="true" autoplay="true">
+    <block wx:for='{{bannerList}}' wx:key="item">
+      <swiper-item class="banner-item">
+        <image class="banner-item image" mode="aspectFill" src='{{item.img.url}}'></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="home-main">
+    <!-- 精选主题 -->
+    <view class="home-main-theme">
+      <view class="home-main-header">精选主题</view>
+      <view class="theme-box">
+        <block wx:for="{{themeList}}" wx:key="item">
+          <view wx:if="{{index==2}}" class="theme-item big">
+            <image src='{{item.topic_img.url}}'></image>
+          </view>
+          <view wx:else class="theme-item">
+            <image src='{{item.topic_img.url}}'></image>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- 热门商品 -->
+    <view class="home-main-products">
+      <view class="home-main-header">最近新品</view>
+      <template is="products" data="{{productList:productList}}"></template>
+
+    </view>
+  </view>
+</view>

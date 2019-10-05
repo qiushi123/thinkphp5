@@ -16,7 +16,7 @@ class ValidateCount extends BaseValidate {
     ];
 
     protected $message = [
-        'count' => 'id必须是1~15之间的正整数'
+        'count' => 'count必须是1~15之间的正整数'
     ];
 
 

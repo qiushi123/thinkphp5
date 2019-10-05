@@ -7,6 +7,6 @@
  */
 
 return [
-    'img_prefix' => 'http://localhost:9001/public/images',
+    'img_prefix' => 'http://localhost:9001/images',
     'token_time' => 7200
 ];

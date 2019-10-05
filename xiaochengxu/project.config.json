@@ -5,7 +5,7 @@
 	},
 	"setting": {
 		"urlCheck": false,
-		"es6": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
@@ -23,7 +23,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.8.3",
 	"appid": "wx3a9741a27fe04fd3",
-	"projectname": "xiaochengxu",
+	"projectname": "php%E9%85%8D%E5%A5%97%E5%95%86%E5%9F%8E",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
